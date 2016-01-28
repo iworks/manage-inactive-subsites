@@ -33,8 +33,7 @@ if ( class_exists( 'IworksManageInactiveSubsites' ) ) {
  *
  * @since x.x.x
  */
-class IworksManageInactiveSubsites
-{
+class IworksManageInactiveSubsites {
     /**
      * Summary.
      *
@@ -44,7 +43,56 @@ class IworksManageInactiveSubsites
      */
     private $version = 'trunk';
 
-    public function __construct()
-    {
+    public function __construct() {
+        add_action( 'admin_init', array( $this,'deactivate_plugin_for_non_network_install' ) );
+    }
+
+    /**
+     * Summary.
+     *
+     * Description.
+     *
+     * @since x.x.x
+     * @access (for functions: only use if private)
+     *
+     * @see Function/method/class relied on
+     * @link URL
+     * @global type $varname Description.
+     * @global type $varname Description.
+     *
+     * @param type $var Description.
+     * @param type $var Optional. Description.
+     * @return type Description.
+     */
+    public function deactivate_plugin_for_non_network_install() {
+        if ( 'deactivate' != get_option( 'manage-inactive-subsites-deactivate', '' ) ) {
+            return;
+        }
+        add_action( 'admin_notices', array( $this, 'deactivate_plugin_for_non_network_install_admin_notice' ) );
+        deactivate_plugins( plugin_basename( dirname( dirname( dirname( __FILE__ ) ) ) ) . '/manage-inactive-subsites.php' );
+    }
+
+    /**
+     * Summary.
+     *
+     * Description.
+     *
+     * @since x.x.x
+     * @access (for functions: only use if private)
+     *
+     * @see Function/method/class relied on
+     * @link URL
+     * @global type $varname Description.
+     * @global type $varname Description.
+     *
+     * @param type $var Description.
+     * @param type $var Optional. Description.
+     * @return type Description.
+     */
+    public function deactivate_plugin_for_non_network_install_admin_notice() {
+        printf(
+            '<div class="notice notice-info"><p>%s</p></div>',
+            __('<b>Manage Inactive Subsites</b> can be only instaled as network activation.', 'manage-inactive-subsites')
+        );
     }
 }

@@ -34,7 +34,7 @@ if ( !defined( 'WPINC' ) ) {
  * require: IworksManage Inactive Subsites Class
  */
 if ( !class_exists( 'IworksManageInactiveSubsites' ) ) {
-    require_once( $vendor . '/iworks/manage_inactive_subsites.php' );
+    require_once( dirname( __FILE__ ) . '/vendor/iworks/manage-inactive-subsites.php' );
 }
 /**
  * i18n
@@ -59,8 +59,10 @@ load_plugin_textdomain( 'manage-inactive-subsites', false, dirname( dirname( plu
  * @param type $var Optional. Description.
  * @return type Description.
  */
-function iworks_manage_inactive_subsites_activate()
-{
+function iworks_manage_inactive_subsites_activate() {
+    if ( is_admin() ) {
+        add_option('manage-inactive-subsites-deactivate', 'deactivate', null, 'no' );
+    }
 }
 
 /**
@@ -80,8 +82,7 @@ function iworks_manage_inactive_subsites_activate()
  * @param type $var Optional. Description.
  * @return type Description.
  */
-function iworks_manage_inactive_subsites_deactivate()
-{
+function iworks_manage_inactive_subsites_deactivate() {
 }
 
 $iworks_manage_inactive_subsites = new IworksManageInactiveSubsites();
