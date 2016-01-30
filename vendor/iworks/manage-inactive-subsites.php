@@ -27,9 +27,24 @@ if ( class_exists( 'IworksManageInactiveSubsites' ) ) {
 }
 
 /**
- * Summary.
+ * TASKS TO DONE:
  *
- * Description.
+ * A cron to properly handle this in a scalable way.
+ *
+ * Factor in how to manage expiring of sites on first configuration, or when
+ * changing the settings.
+ *
+ * All this will be based off the last_updated timestamp in the blogs table,
+ * and remember this could be potentially running on a large multisite install
+ * like edublogs.org with millions of blogs! Scalable code is important here.
+ *
+ */
+
+/**
+ * Manage Inactive Subsites
+ *
+ * This class contain whole functionality to auto-manage multi-site status for
+ * subsited, based on field 'last_updated' from table $wpdb->blogs
  *
  * @since 1.0.0
  */
@@ -51,6 +66,15 @@ class IworksManageInactiveSubsites {
      * @access private
      * @var string $version plugin version
      */
+    private $default_settings = array();
+
+    /**
+     * Plugin version.
+     *
+     * @since 1.0.0
+     * @access private
+     * @var string $version plugin version
+     */
     private $version = 'trunk';
 
     public function __construct() {
@@ -60,29 +84,73 @@ class IworksManageInactiveSubsites {
         $this->plugin_basename = plugin_basename( dirname( dirname( dirname( __FILE__ ) ) ) ) . '/manage-inactive-subsites.php';
 
         /**
+         * default settings
+         */
+        $this->default_settings = array(
+            'interval_type' => array(
+                'type'        => 'radio',
+                'label'       => __( 'Interval Type', 'manage-inactive-subsites' ),
+                'value'       => 'week',
+                'callback'    => array( $this, 'render_interval_type' ),
+                'description' => __( 'You can choose what time range you want to use.', 'manage-inactive-subsites' ),
+                'options'     => array(
+                    'day'   => array(
+                        'label' => __( 'Day', 'manage-inactive-subsites' ),
+                    ),
+                    'week'  => array(
+                        'label' => __( 'Week', 'manage-inactive-subsites' ),
+                    ),
+                    'month' => array(
+                        'label' => __( 'Month', 'manage-inactive-subsites' ),
+                    ),
+                    'year'  => array(
+                        'label' => __( 'Year', 'manage-inactive-subsites' ),
+                    ),
+                ),
+            ),
+            'interval_size' => array(
+                'type'        => 'number',
+                'label'       => __( 'Interval Size', 'manage-inactive-subsites' ),
+                'value'       => 6,
+                'callback'    => array( $this, 'render_interval_size' ),
+            ),
+            'action'        => array(
+                'type'        => 'radio',
+                'label'       => __( 'Action', 'manage-inactive-subsites' ),
+                'value'       => 'archive',
+                'callback'    => array( $this, 'render_action' ),
+                'description' => __( 'Select action which should be taken, when last site update is older then you selected above', 'manage-inactive-subsites' ),
+                'options'           => array(
+                    'archive'    => array(
+                        'label'       => __( 'Archive', 'manage-inactive-subsites' ),
+                        'description' => __( 'Archived site will be unavailable with message "This site has been archived or suspended.".', 'manage-inactive-subsites' ),
+                    ),
+                    'deactivate' => array(
+                        'label'       => __( 'Deactivate', 'manage-inactive-subsites' ),
+                        'description' => __( '', 'manage-inactive-subsites' ),
+                        'description' => __( 'Deactivated site will be unavailable with message "This site has been archived or suspended.".', 'manage-inactive-subsites' ),
+                    ),
+                    'delete'     => array(
+                        'label'       => __( 'Delete', 'manage-inactive-subsites' ),
+                        'description' => __( 'Use with extreme caution because once a site is deleted it can’t be recovered.', 'manage-inactive-subsites' ),
+                    ),
+                ),
+            ),
+        );
+
+        /**
          * actions
          */
-        add_action( 'admin_init', array( $this,'deactivate_plugin_for_non_network_install' ) );
+        add_action( 'admin_init', array( $this, 'register_setting' ) );
+        add_action( 'admin_init', array( $this, 'deactivate_plugin_for_non_network_install' ) );
         add_action( 'network_admin_menu', array( $this, 'add_network_settings_submenu' ) );
         add_action( 'admin_menu', array( $this, 'add_network_settings_submenu' ) );
     }
 
     /**
-     * Summary.
-     *
-     * Description.
+     * Add submenu to Network Settings menu
      *
      * @since 1.0.0
-     * @access (for functions: only use if private)
-     *
-     * @see Function/method/class relied on
-     * @link URL
-     * @global type $varname Description.
-     * @global type $varname Description.
-     *
-     * @param type $var Description.
-     * @param type $var Optional. Description.
-     * @return type Description.
      */
     public function add_network_settings_submenu() {
         add_submenu_page(
@@ -103,30 +171,116 @@ class IworksManageInactiveSubsites {
      * behaviors.
      *
      * @since 1.0.0
-     *
      */
     public function plugin_settings_page() {
+        $this->plugin_settings_update();
+        $screen = get_current_screen();
         echo '<div class="wrap">';
         printf( '<h1>%s</h1>', __( 'Manage Inactive Subsites', 'manage-inactive-subsites' ) );
+        printf( '<p>%s</p>', __( 'You can manage when at what we do with sites wit no activity.', 'manage-inactive-subsites' ) );
+        printf( '<form method="post" action="%s?page=manage-inactive-subsites-settings">', esc_attr( $screen->parent_file ) );
+        wp_nonce_field( 'save-manage-inactive-subsites-configuration', 'manage_inactive_subsites_nonce' );
+
+        settings_fields( 'manage-inactive-subsites-settings' );
+        do_settings_sections( 'manage-inactive-subsites-settings' );
+        submit_button();
+        echo '</form>';
         echo '</div>';
     }
 
     /**
-     * Summary.
+     * Table with plugin options
      *
-     * Description.
+     * This function produce only table withi plugin options.
      *
      * @since 1.0.0
-     * @access (for functions: only use if private)
+     * @access private
+     */
+    private function render_single_field_by_key($key) {
+        $settings = $this->get_settings();
+        $data = $this->default_settings[$key];
+        $option_name = $this->get_option_name( $key );
+        /**
+         * add field description
+         */
+        if ( isset( $data['description'] ) ) {
+            printf ( '<p>%s</p>', $data['description'] );
+        }
+        switch ( $data['type'] ) {
+        case 'radio':
+            printf( '<fieldset><legend class="screen-reader-text"><span>%s</span></legend>', $data['label'] );
+            if ( isset( $data['options'] ) && ! empty( $data['options'] ) ) {
+                echo '<fieldset>';
+                foreach( $data['options'] as $radio_value => $radio_configuration) {
+                    printf(
+                        '<label title="%s"><input type="radio" name="%s" value="%s" %s> %s</label>',
+                        esc_attr( $radio_configuration['label'] ),
+                        esc_attr( $option_name ),
+                        esc_attr( $radio_value ),
+                        ( $settings[$key] == $radio_value )? 'checked="checked"':'',
+                        $radio_configuration['label']
+                    );
+                    /**
+                     * add option description
+                     */
+                    if ( isset( $radio_configuration['description'] ) ) {
+                        printf ( '<p class="description">%s</p>', $radio_configuration['description'] );
+                    } else {
+                        echo '<br />';
+                    }
+                }
+                echo '</fieldset>';
+            } else {
+                _e( 'Corrupted or empty default data, please contact with plugin support.', 'manage-inactive-subsites');
+            }
+            break;
+        case 'number':
+            printf (
+                '<input name="%s" type="number" min="1" value="%s" class="small-text">',
+                esc_attr( $option_name ),
+                esc_attr( $settings[$key] )
+            );
+            break;
+        default:
+            _e( 'Wrong option type, please contact with plugin support.', 'manage-inactive-subsites');
+        }
+        echo '<br />';
+    }
+
+    /**
+     * Update settings.
      *
-     * @see Function/method/class relied on
-     * @link URL
-     * @global type $varname Description.
-     * @global type $varname Description.
+     * This function update and sanitize plugin settings. All settings are
+     * saved as site_options.
      *
-     * @param type $var Description.
-     * @param type $var Optional. Description.
-     * @return type Description.
+     * @since 1.0.0
+     * @access private
+     */
+    private function plugin_settings_update()
+    {
+        if ( empty( $_POST ) || ! check_admin_referer( 'save-manage-inactive-subsites-configuration', 'manage_inactive_subsites_nonce' ) ) {
+            return;
+        }
+        foreach ( array_keys( $this->default_settings ) as $key ) {
+            $option_name = $this->get_option_name( $key );
+            if ( !isset( $_POST[$option_name] ) || empty( $_POST[$option_name] ) ) {
+                continue;
+            }
+            update_site_option( $option_name, $_POST[$option_name] );
+        }
+        $this->print_notice(
+            sprintf( '<b>%s</b>', __( 'Settings saved.', 'manage-inactive-subsites' ) ),
+            'updated'
+        );
+    }
+
+    /**
+     * Deactivate plugin for non-network installation
+     *
+     * When user try to activate this plugin from subsite plugn page, then
+     * plugin is deactivated with messagem that this usage is not allowed.
+     *
+     * @since 1.0.0
      */
     public function deactivate_plugin_for_non_network_install() {
         if ( is_network_admin() ) {
@@ -147,27 +301,237 @@ class IworksManageInactiveSubsites {
     }
 
     /**
-     * Summary.
-     *
-     * Description.
+     * Add warning notice after auto-deactivate.
      *
      * @since 1.0.0
-     * @access (for functions: only use if private)
-     *
-     * @see Function/method/class relied on
-     * @link URL
-     * @global type $varname Description.
-     * @global type $varname Description.
-     *
-     * @param type $var Description.
-     * @param type $var Optional. Description.
-     * @return type Description.
      */
     public function deactivate_plugin_for_non_network_install_admin_notice() {
-        printf(
-            '<div class="notice notice-info"><p>%s</p></div>',
-            __('<b>Manage Inactive Subsites</b> can be only instaled as network activation.', 'manage-inactive-subsites')
+        $this->print_notice(
+            __('<b>Manage Inactive Subsites</b> can be only instaled as network activation.', 'manage-inactive-subsites'),
+            'notice-info'
         );
+    }
+
+    /**
+     * Helper to show notices.
+     *
+     * @since 1.0.0
+     * @access private
+     *
+     * @param string $notice Notice to display.
+     * @param string $class CSS class to add.
+     */
+    private function print_notice( $notice, $class = null ) {
+        if ( empty( $notice ) ) {
+            return;
+        }
+        printf(
+            '<div class="notice %s"><p>%s</p></div>',
+            ! empty( $class )? esc_attr( $class ):'',
+            $notice
+        );
+    }
+
+    /**
+     * Get option name.
+     *
+     * @since 1.0.0
+     * @access private
+     *
+     * @param string $key internal option key
+     * @return string option name.
+     */
+    private function get_option_name( $key ) {
+        $key = preg_replace( '/[^a-z^0-9]\+/', '_', $key );
+        return sprintf( 'manage_inactive_subsites_%s', $key );
+    }
+
+    /**
+     * Register plugin settings.
+     *
+     * Function register all plugin settings and add filter to sanitization
+     * options data before saving it to database.
+     *
+     * @since 1.0.0
+     */
+    public function register_setting() {
+        foreach ( $this->default_settings as $key => $data ) {
+            $option_name = $this->get_option_name( $key );
+            add_settings_section(
+                $option_name,
+                $data['label'],
+                $data['callback'],
+                'manage-inactive-subsites-settings'
+            );
+            register_setting( 'manage-inactive-subsites-settings', $option_name );
+            /**
+             * add sanitization
+             */
+            add_filter(
+                sprintf( 'pre_update_site_option_%s', $option_name ),
+                array( $this, sprintf( 'sanitize_%s', $key ) )
+            );
+        }
+    }
+
+    /**
+     * Get current settings.
+     *
+     * Function get current settings and validate values.
+     *
+     * @since 1.0.0
+     *
+     * @return array Associative array with options keys and values.
+     */
+    public function get_settings() {
+        $settings = array();
+        foreach ( $this->default_settings as $key => $data ) {
+            $option_name = $this->get_option_name( $key );
+            $v = get_site_option( $option_name );
+            if ( empty( $v ) ) {
+                $v = $this->get_default_setting_by_key( $key );
+            }
+            /**
+             * sanitize
+             */
+            switch( $key ) {
+            case 'interval_type':
+                $settings[ $key ] = $this->sanitize_interval_type( $v );
+                break;
+            case 'interval_size':
+                $settings[ $key ] = $this->sanitize_interval_size( $v );
+                break;
+            case 'action':
+                $settings[ $key ] = $this->sanitize_action( $v );
+                break;
+            default:
+                $settings[$key] = $v;
+            }
+        }
+        /**
+         * Sanitize
+         */
+        return $settings;
+    }
+
+    /**
+     * Sanitize radio types.
+     *
+     * @since 1.0.0
+     * @access private
+     *
+     * @param string $key option key
+     * @param mixed $value value to sanitize
+     *
+     * @return string interval type value
+     */
+    private function sanitize_radio_by_key( $key, $value = null ) {
+        if (
+            ! empty( $value )
+            && is_string( $value )
+            && isset( $this->default_settings[ $key ] )
+            && isset( $this->default_settings[ $key ]['options'] )
+            && is_array( $this->default_settings[ $key ]['options'] )
+        ) {
+            $value = strtolower( $value );
+            if ( array_key_exists( $value, $this->default_settings[ $key ]['options'] ) ) {
+                return $value;
+            }
+        }
+        return $this->get_default_setting_by_key( $key );
+    }
+
+    /**
+     * Sanitize interval type.
+     *
+     * @since 1.0.0
+     *
+     * @param mixed $value value to sanitize
+     * @return string interval type value
+     */
+    public function sanitize_interval_type( $value ) {
+        return $this->sanitize_radio_by_key( 'interval_type', $value );
+    }
+
+    /**
+     * Sanitize interval size.
+     *
+     * @since 1.0.0
+     *
+     * @param mixed $value value to sanitize
+     * @return integer interval size value
+     */
+    public function sanitize_interval_size( $value ) {
+        $value = intval( $value );
+        if ( $value > 0 ) {
+            return $value;
+        }
+        return $this->get_default_setting_by_key( 'interval_size' );
+    }
+
+    /**
+     * Sanitize action.
+     *
+     * @since 1.0.0
+     *
+     * @param mixed $value value to sanitize
+     * @return string action value
+     */
+    public function sanitize_action( $value ) {
+        return $this->sanitize_radio_by_key( 'action', $value );
+    }
+
+    /**
+     * Render interval_type field
+     *
+     * @since 1.0.0
+     *
+     */
+    public function render_interval_type() {
+        $this->render_single_field_by_key( 'interval_type' );
+    }
+
+    /**
+     * Render interval_size field
+     *
+     * @since 1.0.0
+     *
+     */
+    public function render_interval_size() {
+        $this->render_single_field_by_key( 'interval_size' );
+    }
+
+    /**
+     * Render action field
+     *
+     * @since 1.0.0
+     *
+     */
+    public function render_action() {
+        $this->render_single_field_by_key( 'action' );
+    }
+
+    /**
+     * Get default value.
+     *
+     * Function returns default value for option key.
+     *
+     * @since 1.0.0
+     * @access private
+     *
+     * @param string $key option key
+     *
+     * @return mixed return defult value or null if default value is not
+     * defined
+     */
+    private function get_default_setting_by_key( $key ) {
+        if (
+            isset( $this->default_settings[ $key ] )
+            && isset( $this->default_settings[ $key ]['value'] )
+        ) {
+            return $this->default_settings[ $key ]['value'];
+        }
+        return null;
     }
 
 }
