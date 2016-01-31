@@ -31,64 +31,70 @@ if ( !defined( 'WPINC' ) ) {
 }
 
 /**
- * require: IworksManage Inactive Subsites Class
+ * load only for admin
  */
-if ( !class_exists( 'IworksManageInactiveSubsites' ) ) {
-    require_once( dirname( __FILE__ ) . '/vendor/iworks/manage-inactive-subsites.php' );
-}
-/**
- * i18n
- */
-load_plugin_textdomain( 'manage-inactive-subsites', false, dirname( dirname( plugin_basename( __FILE__) ) ).'/languages' );
 
-
-/**
- * Summary.
- *
- * Description.
- *
- * @since x.x.x
- * @access (for functions: only use if private)
- *
- * @see Function/method/class relied on
- * @link URL
- * @global type $varname Description.
- * @global type $varname Description.
- *
- * @param type $var Description.
- * @param type $var Optional. Description.
- * @return type Description.
- */
-function iworks_manage_inactive_subsites_activate() {
-    if ( is_admin() ) {
-        add_option('manage-inactive-subsites-deactivate', 'deactivate', null, 'no' );
+if ( is_admin() ) {
+    /**
+     * require: IworksManage Inactive Subsites Admin Class
+     */
+    if ( !class_exists( 'IworksManageInactiveSubsitesAdmin' ) ) {
+        require_once( dirname( __FILE__ ) . '/vendor/iworks/manage-inactive-subsites/admin.php' );
+        new IworksManageInactiveSubsitesAdmin();
     }
+    /**
+     * i18n
+     */
+    load_plugin_textdomain( 'manage-inactive-subsites', false, dirname( dirname( plugin_basename( __FILE__) ) ).'/languages' );
+
+
+    /**
+     * Summary.
+     *
+     * Description.
+     *
+     * @since x.x.x
+     * @access (for functions: only use if private)
+     *
+     * @see Function/method/class relied on
+     * @link URL
+     * @global type $varname Description.
+     * @global type $varname Description.
+     *
+     * @param type $var Description.
+     * @param type $var Optional. Description.
+     * @return type Description.
+     */
+    function iworks_manage_inactive_subsites_activate() {
+        if ( is_admin() ) {
+            add_option('manage-inactive-subsites-deactivate', 'deactivate', null, 'no' );
+        }
+    }
+
+    /**
+     * Summary.
+     *
+     * Description.
+     *
+     * @since x.x.x
+     * @access (for functions: only use if private)
+     *
+     * @see Function/method/class relied on
+     * @link URL
+     * @global type $varname Description.
+     * @global type $varname Description.
+     *
+     * @param type $var Description.
+     * @param type $var Optional. Description.
+     * @return type Description.
+     */
+    function iworks_manage_inactive_subsites_deactivate() {
+    }
+
+    /**
+     * install & uninstall
+     */
+    register_activation_hook  ( __FILE__, 'iworks_manage_inactive_subsites_activate'   );
+    register_deactivation_hook( __FILE__, 'iworks_manage_inactive_subsites_deactivate' );
 }
 
-/**
- * Summary.
- *
- * Description.
- *
- * @since x.x.x
- * @access (for functions: only use if private)
- *
- * @see Function/method/class relied on
- * @link URL
- * @global type $varname Description.
- * @global type $varname Description.
- *
- * @param type $var Description.
- * @param type $var Optional. Description.
- * @return type Description.
- */
-function iworks_manage_inactive_subsites_deactivate() {
-}
-
-$iworks_manage_inactive_subsites = new IworksManageInactiveSubsites();
-
-/**
- * install & uninstall
- */
-register_activation_hook  ( __FILE__, 'iworks_manage_inactive_subsites_activate'   );
-register_deactivation_hook( __FILE__, 'iworks_manage_inactive_subsites_deactivate' );
