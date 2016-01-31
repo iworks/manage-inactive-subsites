@@ -259,6 +259,11 @@ class IworksManageInactiveSubsitesAdmin extends IworksManageInactiveSubsites {
             sprintf( '<b>%s</b>', __( 'Settings saved.', 'manage-inactive-subsites' ) ),
             'updated'
         );
+        /**
+         * reset cron
+         */
+        wp_clear_scheduled_hook( 'manage_inactive_subsites_cron_hourly' );
+        wp_schedule_event( time(), 'hourly', 'manage_inactive_subsites_cron_hourly' );
     }
 
     /**

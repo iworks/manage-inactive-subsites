@@ -65,6 +65,7 @@ function iworks_manage_inactive_subsites_activate() {
     if ( is_admin() ) {
         add_option('manage-inactive-subsites-deactivate', 'deactivate', null, 'no' );
     }
+    wp_schedule_event( time(), 'hourly', 'manage_inactive_subsites_cron_hourly' );
 }
 
 /**
