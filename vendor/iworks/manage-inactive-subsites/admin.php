@@ -99,12 +99,12 @@ class IworksManageInactiveSubsitesAdmin extends IworksManageInactiveSubsites {
          * Interval Type
          */
         $content .= sprintf( '<h3>%s</h3>', __( 'Interval Type', 'manage-inactive-subsites' ) );
-        $content .= sprintf( '<p>%s</p>', __( 'Interval type defines time range to easy managment. You can choose day, week, month or year.', 'manage-inactive-subsites' ) );
+        $content .= sprintf( '<p>%s</p>', __( 'Interval type defines time range to easy managment. You can choose day, week, month, quarter or year.', 'manage-inactive-subsites' ) );
         /**
          * Interval Size
          */
         $content .= sprintf( '<h3>%s</h3>', __( 'Interval Size', 'manage-inactive-subsites' ) );
-        $content .= sprintf( '<p>%s</p>', __( 'Interval size allow you to choose how many days, weeks, months or years must pass after we take selected action on blogs which pass this condition.', 'manage-inactive-subsites' ) );
+        $content .= sprintf( '<p>%s</p>', __( 'Interval size allow you to choose how many days, weeks, months, quarter or years must pass after we take selected action on blogs which pass this condition.', 'manage-inactive-subsites' ) );
 
         /**
          * Action

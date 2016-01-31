@@ -103,6 +103,9 @@ abstract class IworksManageInactiveSubsites {
                     'month' => array(
                         'label' => __( 'Month', 'manage-inactive-subsites' ),
                     ),
+                    'quarter'  => array(
+                        'label' => __( 'Quarter', 'manage-inactive-subsites' ),
+                    ),
                     'year'  => array(
                         'label' => __( 'Year', 'manage-inactive-subsites' ),
                     ),
