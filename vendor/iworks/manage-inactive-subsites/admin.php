@@ -29,24 +29,9 @@ if ( class_exists( 'IworksManageInactiveSubsitesAdmin' ) ) {
 require_once( dirname( dirname( __FILE__ ) ) . '/manage-inactive-subsites.php' );
 
 /**
- * TASKS TO DONE:
+ * Manage Inactive Subsites Admin
  *
- * A cron to properly handle this in a scalable way.
- *
- * Factor in how to manage expiring of sites on first configuration, or when
- * changing the settings.
- *
- * All this will be based off the last_updated timestamp in the blogs table,
- * and remember this could be potentially running on a large multisite install
- * like edublogs.org with millions of blogs! Scalable code is important here.
- *
- */
-
-/**
- * Manage Inactive Subsites
- *
- * This class contain whole functionality to auto-manage multi-site status for
- * subsited, based on field 'last_updated' from table $wpdb->blogs
+ * This class contain network admin part of plugin.
  *
  * @since 1.0.0
  */

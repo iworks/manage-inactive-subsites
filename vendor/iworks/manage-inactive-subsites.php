@@ -43,8 +43,8 @@ if ( class_exists( 'IworksManageInactiveSubsites' ) ) {
 /**
  * Manage Inactive Subsites
  *
- * This class contain whole functionality to auto-manage multi-site status for
- * subsited, based on field 'last_updated' from table $wpdb->blogs
+ * This abstract class contains common settings and sanitization methods for
+ * two nested class: Admin and Cron.
  *
  * @since 1.0.0
  */
