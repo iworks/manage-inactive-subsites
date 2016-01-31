@@ -40,12 +40,15 @@ class IworksManageInactiveSubsitesCron extends IworksManageInactiveSubsites {
     public function __construct() {
         parent::__construct();
         add_action( 'manage_inactive_subsites_cron_hourly', array( $this, 'wp_cron_hourly' ) );
-        /**
-         * debug! delete line under, befor publish
-         */
-        add_action( 'manage_inactive_subsites_cron', array( $this, 'wp_cron_hourly' ) );
     }
 
+    /**
+     * WP Cron plugin function
+     *
+     * @since 1.0.0
+     *
+     * @global wpdb  $wpdb WordPress database abstraction object.
+     */
     public function wp_cron_hourly() {
         $settings = $this->get_settings();
         $limit = 1;
@@ -62,8 +65,10 @@ class IworksManageInactiveSubsitesCron extends IworksManageInactiveSubsites {
         }
 
         global $wpdb;
-
-        $sql = 'SELECT blog_id, site_id FROM %s ';
+        /**
+         * select sites
+         */
+        $sql = 'SELECT blog_id FROM %s ';
         $sql .= 'WHERE last_updated < DATE_SUB( NOW(), INTERVAL %d %s ) ';
         $sql .= $where;
         if ( is_main_site() ) {
@@ -72,12 +77,43 @@ class IworksManageInactiveSubsitesCron extends IworksManageInactiveSubsites {
         $sql .= 'ORDER BY last_updated DESC ';
         $sql .= 'limit %%d';
         $sql = sprintf( $sql, $wpdb->blogs, $settings['interval_size'], strtoupper( $settings['interval_type'] ) );
-        $sql = $wpdb->prepare( $sql, $limit );
 
-        update_option( 'mis_cron_sql', $sql );
-        update_option( 'mis_cron', date('c') );
-        update_option( 'mis_cron1', $this->get_settings() );
-        d($this->get_settings());die;
+        /**
+         * get expired sites
+         */
+        $sql = $wpdb->prepare( $sql, $limit );
+        $results = $wpdb->get_results( $sql );
+
+        if ( count( $results ) < 1 ) {
+            return;
+        }
+
+        /**
+         * include required files
+         */
+        if ( 'archive' == $settings['action'] ) {
+            include_once( ABSPATH . WPINC . '/ms-blogs.php' );
+        } else {
+            include_once( ABSPATH . 'wp-admin/includes/ms.php' );
+        }
+
+        /**
+         * update
+         */
+        foreach( $results as $row ) {
+            update_option( 'mis_cron_query_'.$row->blog_id, $settings['action'] );
+            switch( $settings['action'] ) {
+            case 'deactivate':
+                wpmu_delete_blog( $row->blog_id, false );
+                break;
+            case 'archive':
+                update_blog_status( $row->blog_id, 'archived', 1 );
+                break;
+            case 'delete':
+                wpmu_delete_blog( $row->blog_id, true );
+                break;
+            }
+        }
     }
 
 }

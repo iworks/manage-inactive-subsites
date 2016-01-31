@@ -29,8 +29,6 @@ if ( class_exists( 'IworksManageInactiveSubsites' ) ) {
 /**
  * TASKS TO DONE:
  *
- * A cron to properly handle this in a scalable way.
- *
  * Factor in how to manage expiring of sites on first configuration, or when
  * changing the settings.
  *
