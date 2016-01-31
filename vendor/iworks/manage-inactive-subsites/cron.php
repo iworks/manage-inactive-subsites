@@ -39,6 +39,13 @@ class IworksManageInactiveSubsitesCron extends IworksManageInactiveSubsites {
 
     public function __construct() {
         parent::__construct();
+        if ( ! wp_next_scheduled( 'manage-inactive-subsites-cron-hourly' ) ) {
+            wp_schedule_event( time(), 'hourly', 'manage_inactive_subsites_cron_hourly' );
+        }
+        add_action( 'manage_inactive_subsites_cron_hourly', array( $this, 'wp_cron_hourly' ) );
+    }
+
+    public function wp_cron_hourly() {
     }
 
 }
