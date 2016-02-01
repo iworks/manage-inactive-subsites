@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Manage Inactive Subsites trunk\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/support/plugin/manage-inactive-"
 "subsites\n"
-"POT-Creation-Date: 2016-02-01 07:41:52+00:00\n"
+"POT-Creation-Date: 2016-02-01 07:47:22+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -41,7 +41,7 @@ msgstr ""
 
 #: vendor/iworks/manage-inactive-subsites/admin.php:102
 msgid ""
-"Interval type defines time range to easy managment. You can choose day, "
+"Interval type defines time range to easy management. You can choose day, "
 "week, month, quarter or year."
 msgstr ""
 
@@ -150,7 +150,7 @@ msgstr ""
 
 #: vendor/iworks/manage-inactive-subsites/admin.php:302
 msgid ""
-"<b>Manage Inactive Subsites</b> can be only instaled as network activation."
+"<b>Manage Inactive Subsites</b> can be only installed as network activation."
 msgstr ""
 
 #: vendor/iworks/manage-inactive-subsites.php:93

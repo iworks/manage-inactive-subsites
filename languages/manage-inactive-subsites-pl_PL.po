@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Manage Inactive Subsites 3.3.4\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/support/plugin/manage-inactive-"
 "subsites\n"
-"POT-Creation-Date: 2016-02-01 07:40:01+00:00\n"
+"POT-Creation-Date: 2016-02-01 07:45:58+00:00\n"
 "PO-Revision-Date: 2012-08-27 20:36+0100\n"
 "Last-Translator: Marcin Pietrzak <marcin@iworks.pl>\n"
 "Language-Team: upprev-language-team@iworks.pl\n"
@@ -40,18 +40,18 @@ msgstr ""
 #: vendor/iworks/manage-inactive-subsites/admin.php:101
 #: vendor/iworks/manage-inactive-subsites.php:90
 msgid "Interval Type"
-msgstr ""
+msgstr "Typ okresu"
 
 #: vendor/iworks/manage-inactive-subsites/admin.php:102
 msgid ""
-"Interval type defines time range to easy managment. You can choose day, "
+"Interval type defines time range to easy management. You can choose day, "
 "week, month, quarter or year."
 msgstr ""
 
 #: vendor/iworks/manage-inactive-subsites/admin.php:106
 #: vendor/iworks/manage-inactive-subsites.php:114
 msgid "Interval Size"
-msgstr ""
+msgstr "Wielkość okresu"
 
 #: vendor/iworks/manage-inactive-subsites/admin.php:107
 msgid ""
@@ -63,7 +63,7 @@ msgstr ""
 #: vendor/iworks/manage-inactive-subsites/admin.php:112
 #: vendor/iworks/manage-inactive-subsites.php:120
 msgid "Action"
-msgstr ""
+msgstr "Akcja"
 
 #: vendor/iworks/manage-inactive-subsites/admin.php:113
 msgid ""
@@ -73,12 +73,12 @@ msgstr ""
 
 #: vendor/iworks/manage-inactive-subsites/admin.php:114
 msgid "Avaialable options"
-msgstr ""
+msgstr "Dostępne opcje"
 
 #: vendor/iworks/manage-inactive-subsites/admin.php:120
 #: vendor/iworks/manage-inactive-subsites.php:126
 msgid "Archive"
-msgstr ""
+msgstr "Archiwizuj"
 
 #: vendor/iworks/manage-inactive-subsites/admin.php:122
 msgid "Marks a site as being archived so it's not accessible by users."
@@ -97,7 +97,7 @@ msgstr ""
 #: vendor/iworks/manage-inactive-subsites/admin.php:130
 #: vendor/iworks/manage-inactive-subsites.php:130
 msgid "Deactivate"
-msgstr ""
+msgstr "Deaktywuj"
 
 #: vendor/iworks/manage-inactive-subsites/admin.php:132
 msgid ""
@@ -116,7 +116,7 @@ msgstr ""
 #: vendor/iworks/manage-inactive-subsites/admin.php:140
 #: vendor/iworks/manage-inactive-subsites.php:135
 msgid "Delete"
-msgstr ""
+msgstr "Skasuj"
 
 #: vendor/iworks/manage-inactive-subsites/admin.php:142
 msgid "Deletes the site entirely."
@@ -153,7 +153,7 @@ msgstr "Ustawienia zostały zapisane."
 
 #: vendor/iworks/manage-inactive-subsites/admin.php:302
 msgid ""
-"<b>Manage Inactive Subsites</b> can be only instaled as network activation."
+"<b>Manage Inactive Subsites</b> can be only installed as network activation."
 msgstr ""
 
 #: vendor/iworks/manage-inactive-subsites.php:93
