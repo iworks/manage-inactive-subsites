@@ -99,7 +99,7 @@ class IworksManageInactiveSubsitesAdmin extends IworksManageInactiveSubsites {
          * Interval Type
          */
         $content .= sprintf( '<h3>%s</h3>', __( 'Interval Type', 'manage-inactive-subsites' ) );
-        $content .= sprintf( '<p>%s</p>', __( 'Interval type defines time range to easy managment. You can choose day, week, month, quarter or year.', 'manage-inactive-subsites' ) );
+        $content .= sprintf( '<p>%s</p>', __( 'Interval type defines time range to easy management. You can choose day, week, month, quarter or year.', 'manage-inactive-subsites' ) );
         /**
          * Interval Size
          */
@@ -299,7 +299,7 @@ class IworksManageInactiveSubsitesAdmin extends IworksManageInactiveSubsites {
      */
     public function deactivate_plugin_for_non_network_install_admin_notice() {
         $this->print_notice(
-            __('<b>Manage Inactive Subsites</b> can be only instaled as network activation.', 'manage-inactive-subsites'),
+            __('<b>Manage Inactive Subsites</b> can be only installed as network activation.', 'manage-inactive-subsites'),
             'notice-info'
         );
     }
