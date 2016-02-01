@@ -164,7 +164,7 @@ class IworksManageInactiveSubsitesAdmin extends IworksManageInactiveSubsites {
         $screen = get_current_screen();
         echo '<div class="wrap">';
         printf( '<h1>%s</h1>', __( 'Manage Inactive Subsites', 'manage-inactive-subsites' ) );
-        printf( '<p>%s</p>', __( 'You can manage when at what we do with sites wit no activity.', 'manage-inactive-subsites' ) );
+        printf( '<p>%s</p>', __( 'You can manage when at what we do with sites with no activity.', 'manage-inactive-subsites' ) );
         printf( '<form method="post" action="%s?page=manage-inactive-subsites-settings">', esc_attr( $screen->parent_file ) );
         wp_nonce_field( 'save-manage-inactive-subsites-configuration', 'manage_inactive_subsites_nonce' );
 
