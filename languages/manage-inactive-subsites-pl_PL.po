@@ -5,198 +5,309 @@ msgstr ""
 "Project-Id-Version: Manage Inactive Subsites 1.0.0\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/support/plugin/manage-inactive-"
 "subsites\n"
-"POT-Creation-Date: 2016-02-01 09:11:08+00:00\n"
-"PO-Revision-Date: 2016-01-27 20:36+0100\n"
+"POT-Creation-Date: 2016-02-01 19:28:14+00:00\n"
+"PO-Revision-Date: 2016-02-01 20:11+0100\n"
 "Last-Translator: Marcin Pietrzak <marcin@iworks.pl>\n"
 "Language-Team: marcin@iworks.pl\n"
-"Language: Polish\n"
+"Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: Polish\n"
-"X-Poedit-Country: POLAND\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
+"X-Generator: Poedit 1.8.4\n"
 
-#. #-#-#-#-#  manage-inactive-subsites.pot (Manage Inactive Subsites trunk)  #-#-#-#-#
+#. #-#-#-#-#  manage-inactive-subsites.pot (Manage Inactive Subsites 1.0.0)  #-#-#-#-#
 #. Plugin Name of the plugin/theme
-#: vendor/iworks/manage-inactive-subsites/admin.php:60
 #: vendor/iworks/manage-inactive-subsites/admin.php:61
-#: vendor/iworks/manage-inactive-subsites/admin.php:79
-#: vendor/iworks/manage-inactive-subsites/admin.php:166
+#: vendor/iworks/manage-inactive-subsites/admin.php:62
+#: vendor/iworks/manage-inactive-subsites/admin.php:179
 msgid "Manage Inactive Subsites"
-msgstr ""
+msgstr "Manage Inactive Subsites"
 
-#: vendor/iworks/manage-inactive-subsites/admin.php:84
+#: vendor/iworks/manage-inactive-subsites/admin.php:80
+msgid "Overview"
+msgstr "Podsumowanie"
+
+#: vendor/iworks/manage-inactive-subsites/admin.php:85
+msgid "Actions"
+msgstr "Akcje"
+
+#: vendor/iworks/manage-inactive-subsites/admin.php:89
 msgid "For more information:"
 msgstr "Więcej informacji:"
 
-#: vendor/iworks/manage-inactive-subsites/admin.php:85
+#: vendor/iworks/manage-inactive-subsites/admin.php:90
 msgid "Documentation on Site Management"
-msgstr ""
+msgstr "Documentation on Site Management"
 
-#: vendor/iworks/manage-inactive-subsites/admin.php:86
+#: vendor/iworks/manage-inactive-subsites/admin.php:91
 msgid "Working with WordPress Sites in the Network Admin Dashboard"
-msgstr ""
+msgstr "Working with WordPress Sites in the Network Admin Dashboard"
 
-#: vendor/iworks/manage-inactive-subsites/admin.php:101
-#: vendor/iworks/manage-inactive-subsites.php:90
+#: vendor/iworks/manage-inactive-subsites/admin.php:106
+#: vendor/iworks/manage-inactive-subsites.php:78
 msgid "Interval Type"
 msgstr "Typ okresu"
 
-#: vendor/iworks/manage-inactive-subsites/admin.php:102
+#: vendor/iworks/manage-inactive-subsites/admin.php:107
 msgid ""
 "Interval type defines time range to easy management. You can choose day, "
 "week, month, quarter or year."
 msgstr ""
+"Typ okresu definiuje przedział czasu na którym operujemy. Można wybrać "
+"dzień, tydzień, miesiąc kwartał lub rok."
 
-#: vendor/iworks/manage-inactive-subsites/admin.php:106
-#: vendor/iworks/manage-inactive-subsites.php:114
+#: vendor/iworks/manage-inactive-subsites/admin.php:111
+#: vendor/iworks/manage-inactive-subsites.php:102
 msgid "Interval Size"
 msgstr "Wielkość okresu"
 
-#: vendor/iworks/manage-inactive-subsites/admin.php:107
+#: vendor/iworks/manage-inactive-subsites/admin.php:112
 msgid ""
 "Interval size allow you to choose how many days, weeks, months, quarter or "
 "years must pass after we take selected action on blogs which pass this "
 "condition."
 msgstr ""
+"Wielkość przedziału pozwala wybrać po jakim czasie zostanie używa wybrana "
+"akcja, na blogach które spełnią ten warunek."
 
-#: vendor/iworks/manage-inactive-subsites/admin.php:112
-#: vendor/iworks/manage-inactive-subsites.php:120
+#: vendor/iworks/manage-inactive-subsites/admin.php:117
+#: vendor/iworks/manage-inactive-subsites.php:108
 msgid "Action"
 msgstr "Akcja"
 
-#: vendor/iworks/manage-inactive-subsites/admin.php:113
+#: vendor/iworks/manage-inactive-subsites/admin.php:118
 msgid ""
 "Action allow to choose what happend with site, when last update is older "
 "than you defined before."
 msgstr ""
+"Wybór akcji pozwala zdecydować co się ma stać z serwisami starszymi niż "
+"wybrany przedział czasu."
 
-#: vendor/iworks/manage-inactive-subsites/admin.php:114
-msgid "Avaialable options"
+#: vendor/iworks/manage-inactive-subsites/admin.php:119
+msgid "You can read detailed description of actions in next tab."
+msgstr "Dokładniejsz omówienie akcji znajduje się w następnej zakładce."
+
+#: vendor/iworks/manage-inactive-subsites/admin.php:135
+msgid "Avaialable actions"
 msgstr "Dostępne opcje"
 
-#: vendor/iworks/manage-inactive-subsites/admin.php:120
-#: vendor/iworks/manage-inactive-subsites.php:126
+#: vendor/iworks/manage-inactive-subsites/admin.php:140
+#: vendor/iworks/manage-inactive-subsites.php:114
 msgid "Archive"
 msgstr "Archiwizuj"
 
-#: vendor/iworks/manage-inactive-subsites/admin.php:122
+#: vendor/iworks/manage-inactive-subsites/admin.php:141
 msgid "Marks a site as being archived so it's not accessible by users."
 msgstr ""
+"Oznacz witrynę jako zarchiwizowaną i nie jest ona dostępna dla "
+"przeglądających."
 
-#: vendor/iworks/manage-inactive-subsites/admin.php:123
+#: vendor/iworks/manage-inactive-subsites/admin.php:142
 msgid "Archived sites can be unarchived."
-msgstr ""
+msgstr "Witryny mogą zostać przywrócone."
 
-#: vendor/iworks/manage-inactive-subsites/admin.php:124
+#: vendor/iworks/manage-inactive-subsites/admin.php:143
 msgid ""
 "Some people use this option to test the waters before deleting old and "
 "unused sites."
 msgstr ""
+"Niekiedy ta opcja używana jest przed skasowaniem staarych i nieużywanych "
+"serwisów."
 
-#: vendor/iworks/manage-inactive-subsites/admin.php:130
-#: vendor/iworks/manage-inactive-subsites.php:130
+#: vendor/iworks/manage-inactive-subsites/admin.php:148
+#: vendor/iworks/manage-inactive-subsites.php:118
 msgid "Deactivate"
 msgstr "Deaktywuj"
 
-#: vendor/iworks/manage-inactive-subsites/admin.php:132
+#: vendor/iworks/manage-inactive-subsites/admin.php:149
 msgid ""
 "Reverses the activation step users go through when they signup for a site."
-msgstr ""
+msgstr "Właściciel serwisu może go aktywować ponownie."
 
-#: vendor/iworks/manage-inactive-subsites/admin.php:133
+#: vendor/iworks/manage-inactive-subsites/admin.php:150
 msgid "Deactivated sites can be reactivated without much fuss."
-msgstr ""
+msgstr "Przywracanie zdeaktywowanych serwisów nie sprawia większych kłopotów."
 
-#: vendor/iworks/manage-inactive-subsites/admin.php:134
+#: vendor/iworks/manage-inactive-subsites/admin.php:151
 msgid ""
 "There's really not much use to deactivate on a typical WordPress Multisite."
-msgstr ""
+msgstr "To jest chyba najlepsza opcja dla typowej instalacji Multisite."
 
-#: vendor/iworks/manage-inactive-subsites/admin.php:140
-#: vendor/iworks/manage-inactive-subsites.php:135
+#: vendor/iworks/manage-inactive-subsites/admin.php:156
+#: vendor/iworks/manage-inactive-subsites.php:123
 msgid "Delete"
 msgstr "Skasuj"
 
-#: vendor/iworks/manage-inactive-subsites/admin.php:142
+#: vendor/iworks/manage-inactive-subsites/admin.php:157
 msgid "Deletes the site entirely."
-msgstr ""
+msgstr "Całkowicie kasuje serwisy."
 
-#: vendor/iworks/manage-inactive-subsites/admin.php:143
-#: vendor/iworks/manage-inactive-subsites.php:136
+#: vendor/iworks/manage-inactive-subsites/admin.php:158
+#: vendor/iworks/manage-inactive-subsites.php:124
 msgid ""
 "Use with extreme caution because once a site is deleted it can't be "
 "recovered."
 msgstr ""
+"Należy używać bardzo ostrożnie, serwis skasowany nie może zostać odzyskany."
 
-#: vendor/iworks/manage-inactive-subsites/admin.php:144
+#: vendor/iworks/manage-inactive-subsites/admin.php:159
 msgid ""
 "The better option in most circumstances is to archive a site rather than "
 "delete it."
 msgstr ""
+"Zazwyczaj lepszą opcją jest archiwizacja serwisu, za miast jego skasowania."
 
-#: vendor/iworks/manage-inactive-subsites/admin.php:167
+#: vendor/iworks/manage-inactive-subsites/admin.php:180
 msgid "You can manage when and what we do with sites with no activity."
 msgstr ""
+"Można wybrać kiedy i co się stanie z witrynami na których nie ma żadnej "
+"aktywności."
 
-#: vendor/iworks/manage-inactive-subsites/admin.php:221
+#: vendor/iworks/manage-inactive-subsites/admin.php:234
 msgid "Corrupted or empty default data, please contact with plugin support."
 msgstr ""
+"Nieprawidłowe ustawienia początkowe, proszę skontaktować się z kanałem "
+"wsparcia wtyczki."
 
-#: vendor/iworks/manage-inactive-subsites/admin.php:232
+#: vendor/iworks/manage-inactive-subsites/admin.php:245
 msgid "Wrong option type, please contact with plugin support."
-msgstr ""
+msgstr "Błędny typ opcji, proszę skontaktować się z kanałem wsparcia wtyczki."
 
-#: vendor/iworks/manage-inactive-subsites/admin.php:259
+#: vendor/iworks/manage-inactive-subsites/admin.php:272
 msgid "Settings saved."
 msgstr "Ustawienia zostały zapisane."
 
-#: vendor/iworks/manage-inactive-subsites/admin.php:302
+#: vendor/iworks/manage-inactive-subsites/admin.php:315
+msgid ""
+"Thank you for installation <strong>Manage Inactive Sites</strong> plugin."
+msgstr ""
+"Dziękuję za zainstalowanie wtyczki <strong>Manage Inactive Sites</strong>."
+
+#: vendor/iworks/manage-inactive-subsites/admin.php:323
+msgid "%s day"
+msgid_plural "%s days"
+msgstr[0] "%s dzień"
+msgstr[1] "%s dni"
+msgstr[2] "%s dni"
+
+#: vendor/iworks/manage-inactive-subsites/admin.php:326
+msgid "%s week"
+msgid_plural "%s weeks"
+msgstr[0] "%s tydzień"
+msgstr[1] "%s tygodnie"
+msgstr[2] "%s tygodni"
+
+#: vendor/iworks/manage-inactive-subsites/admin.php:329
+msgid "%s month"
+msgid_plural "%s months"
+msgstr[0] "%s miesiąc"
+msgstr[1] "%s miesiące"
+msgstr[2] "%s miesięcy"
+
+#: vendor/iworks/manage-inactive-subsites/admin.php:332
+msgid "%s quarter"
+msgid_plural "%s quarters"
+msgstr[0] "%s kwartał"
+msgstr[1] "%s kwartały"
+msgstr[2] "%s kwartałów"
+
+#: vendor/iworks/manage-inactive-subsites/admin.php:335
+msgid "%s year"
+msgid_plural "%s years"
+msgstr[0] "%s rok"
+msgstr[1] "%s lata"
+msgstr[2] "%s lat"
+
+#: vendor/iworks/manage-inactive-subsites/admin.php:344
+msgid "archived"
+msgstr "zarchiwizowany"
+
+#: vendor/iworks/manage-inactive-subsites/admin.php:347
+msgid "deactivated"
+msgstr "nieaktywny"
+
+#: vendor/iworks/manage-inactive-subsites/admin.php:350
+msgid "deleted"
+msgstr "skasowany"
+
+#: vendor/iworks/manage-inactive-subsites/admin.php:355
+msgid ""
+"Current configuration: after <strong>%s</strong> of inactivity site will be "
+"<strong>%s</strong>."
+msgstr ""
+"W aktualna konfiguracja po <strong>%s</strong> nieaktywności, witryna "
+"zostanie <strong>%s</strong>."
+
+#: vendor/iworks/manage-inactive-subsites/admin.php:364
+msgid ""
+"You can easy change configuration, please go to Network Admin » Settings » "
+"<a href=\"%s\">Manage Inactive Subsites</a> and change current configuration."
+msgstr ""
+"Konfiguracje wtyczki można łatwo zmienić. Przejdź do Administracja Siecią » Ustawienia » "
+"<a href=\"%s\">Manage Inactive Subsites</a> i zmień ją."
+
+#: vendor/iworks/manage-inactive-subsites/admin.php:378
 msgid ""
 "<b>Manage Inactive Subsites</b> can be only installed as network activation."
-msgstr ""
+msgstr "Wytczka <b>Manage Inactive Subsites</b> może być zainstalowana tylko jako instalacja sieciowa."
 
-#: vendor/iworks/manage-inactive-subsites.php:93
+#: vendor/iworks/manage-inactive-subsites/admin.php:382
+msgid ""
+"Please go to <a href=\"%s\">Network Admin Plugins</a> page and activate "
+"<b>Manage Inactive Subsites</b>."
+msgstr ""
+"Przejdź na stronę <a href=\"%s\">Wtyczki w Administracji Siecią </a> i aktywowuj "
+"<b>Manage Inactive Subsites</b>."
+
+#: vendor/iworks/manage-inactive-subsites/admin.php:387
+msgid ""
+"<b>Manage Inactive Subsites</b> can be only installed only in Multisite "
+"WordPress installations."
+msgstr "Wtyczka <b>Manage Inactive Subsites</b> może zostać zainstalowana tylko w sieci blogów."
+
+#: vendor/iworks/manage-inactive-subsites.php:81
 msgid "You can choose what time range you want to use."
-msgstr ""
+msgstr "Można wybrać jaki zakres czasu ma być używany."
 
-#: vendor/iworks/manage-inactive-subsites.php:96
+#: vendor/iworks/manage-inactive-subsites.php:84
 msgid "Day"
 msgstr "Dzień"
 
-#: vendor/iworks/manage-inactive-subsites.php:99
+#: vendor/iworks/manage-inactive-subsites.php:87
 msgid "Week"
 msgstr "Tydzień"
 
-#: vendor/iworks/manage-inactive-subsites.php:102
+#: vendor/iworks/manage-inactive-subsites.php:90
 msgid "Month"
 msgstr "Miesiąc"
 
-#: vendor/iworks/manage-inactive-subsites.php:105
+#: vendor/iworks/manage-inactive-subsites.php:93
 msgid "Quarter"
 msgstr "Kwartał"
 
-#: vendor/iworks/manage-inactive-subsites.php:108
+#: vendor/iworks/manage-inactive-subsites.php:96
 msgid "Year"
 msgstr "Rok"
 
-#: vendor/iworks/manage-inactive-subsites.php:123
+#: vendor/iworks/manage-inactive-subsites.php:111
 msgid ""
 "Select action which should be taken, when last site update is older then you "
 "selected above"
-msgstr ""
+msgstr "Proszœ wybarać, co ma zostać zrobiene z witrynami starszymi niż wybrane parametry."
 
-#: vendor/iworks/manage-inactive-subsites.php:127
+#: vendor/iworks/manage-inactive-subsites.php:115
 msgid ""
 "Archived site will be unavailable with message \"This site has been archived "
 "or suspended.\"."
-msgstr ""
+msgstr "Witryny zarchiwizowane nie będa dostępne oraz będzie wyświetlany kominikat: \"Witryna została zarchiwizowana lub zawieszona\"."
 
-#: vendor/iworks/manage-inactive-subsites.php:132
+#: vendor/iworks/manage-inactive-subsites.php:120
 msgid ""
 "Deactivated site will be unavailable with message \"This site has been "
 "archived or suspended.\"."
-msgstr ""
+msgstr "Witryny zdeaktywowane nie będa dostępne oraz będzie wyświetlany kominikat: \"Witryna została zarchiwizowana lub zawieszona\"."
 
 #. Plugin URI of the plugin/theme
 msgid "http://manage-inactive-subsites.iworks.pl/"
@@ -206,6 +317,8 @@ msgstr "http://manage-inactive-subsites.iworks.pl/"
 msgid ""
 "Allow automate handle status of inactive site in MultiSite installation."
 msgstr ""
+"Umożliwia automatyczną zmianę statusy nie aktualizowanych witryn w sieci "
+"blogów."
 
 #. Author of the plugin/theme
 msgid "Marcin Pietrzak"
