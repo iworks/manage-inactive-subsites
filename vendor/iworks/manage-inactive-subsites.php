@@ -1,5 +1,16 @@
 <?php
 /*
+ * Abbstract cass with common methods
+ *
+ * Class contain mostily configuration method, which are common for admin and
+ * cron classes.
+ *
+ * @link http://iworks.pl/
+ *
+ * @package WordPress
+ * @subpackage Manage Inactive Sites
+ * @since 1.0.0
+ *
 
 Copyright 2016 Marcin Pietrzak (marcin@iworks.pl)
 

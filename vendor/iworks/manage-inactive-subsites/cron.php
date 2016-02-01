@@ -1,5 +1,15 @@
 <?php
 /*
+ * WP-Cron class
+ *
+ * Class to handle all WP-Cron tasks.
+ *
+ * @link http://iworks.pl/
+ *
+ * @package WordPress
+ * @subpackage Manage Inactive Sites
+ * @since 1.0.0
+ *
 
 Copyright 2016 Marcin Pietrzak (marcin@iworks.pl)
 

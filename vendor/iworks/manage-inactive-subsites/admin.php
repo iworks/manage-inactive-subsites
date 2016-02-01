@@ -1,5 +1,15 @@
 <?php
 /*
+ * Admin Class
+ *
+ * This class hanle all administrative activite of this plugin.
+ *
+ * @link http://iworks.pl/
+ *
+ * @package WordPress
+ * @subpackage Manage Inactive Sites
+ * @since 1.0.0
+ *
 
 Copyright 2016 Marcin Pietrzak (marcin@iworks.pl)
 
