@@ -300,11 +300,57 @@ class IworksManageInactiveSubsitesAdmin extends IworksManageInactiveSubsites {
      */
     public function add_notice_with_instruction() {
         $settings = $this->get_settings();
-        $notice = sprintf(
-            __( 'Current configuration: after %d %s inactive sites will be %s.', 'manage-inactive-subsites' ),
-            $settings['interval_size'],
-            $settings['interval_type'],
-            $settings['action']
+        $notice = __( 'Thank you for installation <strong>Manage Inactive Sites</strong> plugin.', 'manage-inactive-subsites' );
+        $notice .= PHP_EOL.PHP_EOL;
+        /**
+         * current configuration
+         */
+        $period = '';
+        switch ( $settings['interval_type'] ) {
+        case 'day':
+            $period = _n( '%s day', '%s days', $settings['interval_size'], 'manage-inactive-subsites' );
+            break;
+        case 'week':
+            $period = _n( '%s week', '%s weeks', $settings['interval_size'], 'manage-inactive-subsites' );
+            break;
+        case 'month':
+            $period = _n( '%s month', '%s months', $settings['interval_size'], 'manage-inactive-subsites' );
+            break;
+        case 'quarter':
+            $period = _n( '%s quarter', '%s quarters', $settings['interval_size'], 'manage-inactive-subsites' );
+            break;
+        case 'year':
+            $period = _n( '%s year', '%s years', $settings['interval_size'], 'manage-inactive-subsites' );
+            break;
+        }
+        if ( empty( $period ) ) {
+            return;
+        }
+        $action = '';
+        switch( $settings['action'] ) {
+        case 'archive':
+            $action = __( 'archived' );
+            break;
+        case 'archive':
+            $action = __( 'deactivated' );
+            break;
+        case 'archive':
+            $action = __( 'deleted' );
+            break;
+        }
+        $period = sprintf( $period, $settings['interval_size'] );
+        $notice .= sprintf(
+            __( 'Current configuration: after <strong>%s</strong> of inactivity site will be <strong>%s</strong>.', 'manage-inactive-subsites' ),
+            $period,
+            $action
+        );
+        /**
+         * and at least: how to change configuration
+         */
+        $notice .= PHP_EOL.PHP_EOL;
+        $notice .= sprintf(
+            __( 'You can easy change configuration, please go to Network Admin » Settings » <a href="%s">Manage Inactive Subsites</a> and change current configuration.', 'manage-inactive-subsites' ),
+                    esc_url( add_query_arg( 'page', 'manage-inactive-subsites-settings', network_admin_url( 'settings.php' ) ) )
         );
         $this->print_notice( $notice, 'updated', 'manage-inactive-subsites-current-configuration' );
     }

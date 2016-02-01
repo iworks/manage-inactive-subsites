@@ -27,18 +27,6 @@ if ( class_exists( 'IworksManageInactiveSubsites' ) ) {
 }
 
 /**
- * TASKS TO DONE:
- *
- * Factor in how to manage expiring of sites on first configuration, or when
- * changing the settings.
- *
- * All this will be based off the last_updated timestamp in the blogs table,
- * and remember this could be potentially running on a large multisite install
- * like edublogs.org with millions of blogs! Scalable code is important here.
- *
- */
-
-/**
  * Manage Inactive Subsites
  *
  * This abstract class contains common settings and sanitization methods for
