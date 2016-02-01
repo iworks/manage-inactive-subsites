@@ -39,7 +39,7 @@ load_plugin_textdomain( 'manage-inactive-subsites', false, plugin_basename( dirn
  * load only for admin
  */
 
-if ( is_network_admin() ) {
+if ( is_admin() ) {
     /**
      * require: IworksManageInactiveSubsitesAdmin Class
      */
