@@ -306,7 +306,7 @@ class IworksManageInactiveSubsitesAdmin extends IworksManageInactiveSubsites {
             $settings['interval_type'],
             $settings['action']
         );
-        $this->print_notice( $notice, 'notice-info');
+        $this->print_notice( $notice, 'updated', 'manage-inactive-subsites-current-configuration' );
     }
 
     /**

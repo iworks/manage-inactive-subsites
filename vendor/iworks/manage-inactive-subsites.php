@@ -138,6 +138,36 @@ abstract class IworksManageInactiveSubsites {
                 ),
             ),
         );
+
+        /**
+         * actions
+         */
+        add_action( 'wp_ajax_mis_hide_admin_notification', array( $this, 'save_hide_admin_notification' ) );
+    }
+
+    public function save_hide_admin_notification() {
+        if (
+            isset( $_REQUEST['uid'] )
+            && isset( $_REQUEST['nonce'] )
+            && wp_verify_nonce(
+                $_REQUEST['nonce'],
+                sprintf( '%s_uid_%d', 'manage-inactive-subsites-current-configuration', $_REQUEST['uid'] )
+            )
+        ) {
+            update_user_option( $_REQUEST['uid'], 'mis_hide_admin_notification', 1 );
+            echo 'ok';
+        }
+        die;
+    }
+
+    public function admin_enqueue_scripts() {
+        wp_enqueue_script(
+            'manage-inactive-subsites-admin',
+            plugins_url( '/scripts/manage-inactive-subsites-admin.js', $this->plugin_basename ),
+            array( 'jquery' ),
+            $this->version,
+            true
+        );
     }
 
     /**
@@ -149,14 +179,30 @@ abstract class IworksManageInactiveSubsites {
      * @param string $notice Notice to display.
      * @param string $class CSS class to add.
      */
-    protected function print_notice( $notice, $class = null ) {
+    protected function print_notice( $notice, $class = '', $nonce_action = false ) {
         if ( empty( $notice ) ) {
             return;
         }
+        if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
+            return;
+        }
+        if ( get_user_option( 'mis_hide_admin_notification', get_current_user_id() ) ) {
+            return;
+        }
+        $nonce_field = '';
+        if ( ! empty( $nonce_action ) ) {
+            $nonce_field = wp_nonce_field(
+                sprintf( '%s_uid_%d', 'manage-inactive-subsites-current-configuration', get_current_user_id() ),
+                'manage_inactive_subsites_nonce'
+            );
+            $class .= ' is-dismissible';
+            add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
+        }
         printf(
-            '<div class="notice %s">%s</div>',
+            '<div class="notice %s manage-inactive-subsites-notice">%s%s</div>',
             ! empty( $class )? esc_attr( $class ):'',
-            wpautop( $notice )
+            wpautop( $notice ),
+            $nonce_field
         );
     }
 
