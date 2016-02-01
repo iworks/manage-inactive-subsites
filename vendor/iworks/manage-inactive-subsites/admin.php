@@ -45,6 +45,7 @@ class IworksManageInactiveSubsitesAdmin extends IworksManageInactiveSubsites {
          */
         add_action( 'admin_init', array( $this, 'register_setting' ) );
         add_action( 'admin_init', array( $this, 'deactivate_plugin_for_non_network_install' ) );
+        add_action( 'admin_init', array( $this, 'add_notice_with_instruction' ) );
         add_action( 'network_admin_menu', array( $this, 'add_network_settings_submenu' ) );
         add_action( 'admin_menu', array( $this, 'add_network_settings_submenu' ) );
     }
@@ -297,11 +298,37 @@ class IworksManageInactiveSubsitesAdmin extends IworksManageInactiveSubsites {
      *
      * @since 1.0.0
      */
-    public function deactivate_plugin_for_non_network_install_admin_notice() {
-        $this->print_notice(
-            __('<b>Manage Inactive Subsites</b> can be only installed as network activation.', 'manage-inactive-subsites'),
-            'notice-info'
+    public function add_notice_with_instruction() {
+        $settings = $this->get_settings();
+        $notice = sprintf(
+            __( 'Current configuration: after %d %s inactive sites will be %s.', 'manage-inactive-subsites' ),
+            $settings['interval_size'],
+            $settings['interval_type'],
+            $settings['action']
         );
+        $this->print_notice( $notice, 'notice-info');
+    }
+
+    /**
+     * Add warning notice after auto-deactivate.
+     *
+     * @since 1.0.0
+     */
+    public function deactivate_plugin_for_non_network_install_admin_notice() {
+        $notice = '';
+        if ( is_multisite() ) {
+            $notice = __('<b>Manage Inactive Subsites</b> can be only installed as network activation.', 'manage-inactive-subsites');
+            if ( current_user_can( 'manage_network_plugins' ) ) {
+                $notice .= PHP_EOL.PHP_EOL;
+                $notice .= sprintf(
+                    __('Please go to <a href="%s">Network Admin Plugins</a> page and activate <b>Manage Inactive Subsites</b>.', 'manage-inactive-subsites'),
+                    esc_url( add_query_arg( 'plugin_status', 'inactive', network_admin_url( 'plugins.php' ) ) )
+                );
+            }
+        } else {
+            $notice = __('<b>Manage Inactive Subsites</b> can be only installed only in Multisite WordPress installations.', 'manage-inactive-subsites');
+        }
+        $this->print_notice( $notice, 'notice-info');
     }
 
     /**

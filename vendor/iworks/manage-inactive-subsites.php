@@ -154,9 +154,9 @@ abstract class IworksManageInactiveSubsites {
             return;
         }
         printf(
-            '<div class="notice %s"><p>%s</p></div>',
+            '<div class="notice %s">%s</div>',
             ! empty( $class )? esc_attr( $class ):'',
-            $notice
+            wpautop( $notice )
         );
     }
 
