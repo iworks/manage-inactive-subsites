@@ -4,6 +4,7 @@ Plugin Name: Manage Inactive Subsites
 Plugin URI: http://manage-inactive-subsites.iworks.pl/
 Description: Allow automate handle status of inactive site in MultiSite installation.
 Version: 1.0.0
+Network: true
 Author: Marcin Pietrzak
 Author URI: http://iworks.pl/
 License: GPLv2 or later
