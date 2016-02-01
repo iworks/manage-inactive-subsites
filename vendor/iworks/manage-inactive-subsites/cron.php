@@ -47,7 +47,7 @@ class IworksManageInactiveSubsitesCron extends IworksManageInactiveSubsites {
      *
      * @since 1.0.0
      *
-     * @global wpdb  $wpdb WordPress database abstraction object.
+     * @global wpdb $wpdb WordPress database abstraction object.
      */
     public function wp_cron_hourly() {
         $settings = $this->get_settings();
@@ -101,7 +101,7 @@ class IworksManageInactiveSubsitesCron extends IworksManageInactiveSubsites {
          * update
          */
         foreach( $results as $row ) {
-            update_option( 'mis_cron_query_'.$row->blog_id, $settings['action'] );
+            update_option( 'mis_cron_query_' . $row->blog_id, $settings['action'] );
             switch( $settings['action'] ) {
             case 'deactivate':
                 wpmu_delete_blog( $row->blog_id, false );

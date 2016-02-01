@@ -61,7 +61,7 @@ abstract class IworksManageInactiveSubsites {
      * @access protected
      * @var string $version plugin version
      */
-    protected $version = 'trunk';
+    protected $version = '1.0.0';
 
     public function __construct() {
         /**
@@ -133,6 +133,13 @@ abstract class IworksManageInactiveSubsites {
         add_action( 'wp_ajax_mis_hide_admin_notification', array( $this, 'save_hide_admin_notification' ) );
     }
 
+    /**
+     * Save status of entry notification.
+     *
+     * AJAX action, to save to user profile state of entry notification.
+     *
+     * @since 1.0.0
+     */
     public function save_hide_admin_notification() {
         if (
             isset( $_REQUEST['uid'] )
@@ -148,6 +155,13 @@ abstract class IworksManageInactiveSubsites {
         die;
     }
 
+    /**
+     * Enqueue admin script.
+     *
+     * Enqueue admin script to handle entry message.
+     *
+     * @since 1.0.0
+     */
     public function admin_enqueue_scripts() {
         wp_enqueue_script(
             'manage-inactive-subsites-admin',

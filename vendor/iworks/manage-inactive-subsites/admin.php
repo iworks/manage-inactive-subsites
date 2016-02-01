@@ -43,11 +43,11 @@ class IworksManageInactiveSubsitesAdmin extends IworksManageInactiveSubsites {
         /**
          * actions
          */
-        add_action( 'admin_init', array( $this, 'register_setting' ) );
-        add_action( 'admin_init', array( $this, 'deactivate_plugin_for_non_network_install' ) );
         add_action( 'admin_init', array( $this, 'add_notice_with_instruction' ) );
-        add_action( 'network_admin_menu', array( $this, 'add_network_settings_submenu' ) );
+        add_action( 'admin_init', array( $this, 'deactivate_plugin_for_non_network_install' ) );
+        add_action( 'admin_init', array( $this, 'register_setting' ) );
         add_action( 'admin_menu', array( $this, 'add_network_settings_submenu' ) );
+        add_action( 'network_admin_menu', array( $this, 'add_network_settings_submenu' ) );
     }
 
     /**
@@ -77,9 +77,13 @@ class IworksManageInactiveSubsitesAdmin extends IworksManageInactiveSubsites {
         $screen = get_current_screen();
         $screen->add_help_tab( array(
             'id'       => 'manage-inactive-subsites',
-            'title'    => __( 'Manage Inactive Subsites', 'manage-inactive-subsites' ),
-            'content'  => $this->get_contextual_help_contant(),
-            'This is where I would provide tabbed help to the user on how everything in my admin panel works. Formatted HTML works fine in here too'
+            'title'    => __( 'Overview', 'manage-inactive-subsites' ),
+            'content'  => $this->get_contextual_help_content_overview()
+        ));
+        $screen->add_help_tab( array(
+            'id'       => 'manage-inactive-subsites-actions',
+            'title'    => __( 'Actions', 'manage-inactive-subsites' ),
+            'content'  => $this->get_contextual_help_content_action()
         ));
         $screen->set_help_sidebar(
             '<p><strong>' . __( 'For more information:', 'manage-inactive-subsites' ) . '</strong></p>' .
@@ -94,7 +98,7 @@ class IworksManageInactiveSubsitesAdmin extends IworksManageInactiveSubsites {
      * @since 1.0.0
      * @access private
      */
-    private function get_contextual_help_contant() {
+    private function get_contextual_help_content_overview() {
         $content = '';
         /**
          * Interval Type
@@ -112,39 +116,47 @@ class IworksManageInactiveSubsitesAdmin extends IworksManageInactiveSubsites {
          */
         $content .= sprintf( '<h3>%s</h3>', __( 'Action', 'manage-inactive-subsites' ) );
         $content .= sprintf( '<p>%s</p>', __( 'Action allow to choose what happend with site, when last update is older than you defined before.', 'manage-inactive-subsites' ) );
-        $content .= sprintf( '<h4>%s</h4>', __( 'Avaialable options', 'manage-inactive-subsites' ) );
-        $content .= '<dl>';
+        $content .= sprintf( '<p>%s</p>', __( 'You can read detailed description of actions in next tab.', 'manage-inactive-subsites' ) );
+
+        /**
+         * return
+         */
+        return $content;
+    }
+
+    /**
+     * Content of contextual help, section "action"
+     *
+     * @since 1.0.0
+     * @access private
+     */
+    private function get_contextual_help_content_action() {
+        $content = '';
+        $content .= sprintf( '<h3>%s</h3>', __( 'Avaialable actions', 'manage-inactive-subsites' ) );
 
         /**
          * Action: Archive
          */
-        $content .= sprintf( '<dd><strong>%s</strong></dd>', __( 'Archive', 'manage-inactive-subsites' ) );
-        $content .= '<dd>';
+        $content .= sprintf( '<h4>%s</h4>', __( 'Archive', 'manage-inactive-subsites' ) );
         $content .= sprintf( '<p>%s</p>', __( 'Marks a site as being archived so it\'s not accessible by users.', 'manage-inactive-subsites' ) );
         $content .= sprintf( '<p>%s</p>', __( 'Archived sites can be unarchived.', 'manage-inactive-subsites' ) );
         $content .= sprintf( '<p>%s</p>', __( 'Some people use this option to test the waters before deleting old and unused sites.', 'manage-inactive-subsites' ) );
-        $content .= '</dd>';
 
         /**
          * Action: Deactivate
          */
-        $content .= sprintf( '<dd><strong>%s</strong></dd>', __( 'Deactivate', 'manage-inactive-subsites' ) );
-        $content .= '<dd>';
+        $content .= sprintf( '<h4>%s</h4>', __( 'Deactivate', 'manage-inactive-subsites' ) );
         $content .= sprintf( '<p>%s</p>', __( 'Reverses the activation step users go through when they signup for a site.', 'manage-inactive-subsites' ) );
         $content .= sprintf( '<p>%s</p>', __( 'Deactivated sites can be reactivated without much fuss.', 'manage-inactive-subsites' ) );
         $content .= sprintf( '<p>%s</p>', __( 'There\'s really not much use to deactivate on a typical WordPress Multisite.', 'manage-inactive-subsites' ) );
-        $content .= '</dd>';
 
         /**
          * Action: Delete
          */
-        $content .= sprintf( '<dd><strong>%s</strong></dd>', __( 'Delete', 'manage-inactive-subsites' ) );
-        $content .= '<dd>';
+        $content .= sprintf( '<h4>%s</h4>', __( 'Delete', 'manage-inactive-subsites' ) );
         $content .= sprintf( '<p>%s</p>', __( 'Deletes the site entirely.', 'manage-inactive-subsites' ) );
         $content .= sprintf( '<p>%s</p>', __( 'Use with extreme caution because once a site is deleted it can\'t be recovered.', 'manage-inactive-subsites' ) );
         $content .= sprintf( '<p>%s</p>', __( 'The better option in most circumstances is to archive a site rather than delete it.', 'manage-inactive-subsites' ) );
-        $content .= '</dd>';
-        $content .= '</dl>';
 
         /**
          * return
