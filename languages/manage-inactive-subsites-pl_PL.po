@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Manage Inactive Subsites 1.0.0\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/support/plugin/manage-inactive-"
 "subsites\n"
-"POT-Creation-Date: 2016-02-01 07:45:58+00:00\n"
+"POT-Creation-Date: 2016-02-01 09:11:08+00:00\n"
 "PO-Revision-Date: 2016-01-27 20:36+0100\n"
 "Last-Translator: Marcin Pietrzak <marcin@iworks.pl>\n"
 "Language-Team: marcin@iworks.pl\n"
@@ -136,7 +136,7 @@ msgid ""
 msgstr ""
 
 #: vendor/iworks/manage-inactive-subsites/admin.php:167
-msgid "You can manage when at what we do with sites with no activity."
+msgid "You can manage when and what we do with sites with no activity."
 msgstr ""
 
 #: vendor/iworks/manage-inactive-subsites/admin.php:221
