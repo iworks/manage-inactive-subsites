@@ -31,6 +31,11 @@ if ( !defined( 'WPINC' ) ) {
 }
 
 /**
+ * i18n
+ */
+load_plugin_textdomain( 'manage-inactive-subsites', false, plugin_basename( dirname( __FILE__ ) ) . '/languages' );
+
+/**
  * load only for admin
  */
 
@@ -42,10 +47,6 @@ if ( is_network_admin() ) {
         require_once( dirname( __FILE__ ) . '/vendor/iworks/manage-inactive-subsites/admin.php' );
         new IworksManageInactiveSubsitesAdmin();
     }
-    /**
-     * i18n - we need this only for admin site
-     */
-    load_plugin_textdomain( 'manage-inactive-subsites', false, dirname( dirname( plugin_basename( __FILE__) ) ).'/languages' );
 }
 
 /**
